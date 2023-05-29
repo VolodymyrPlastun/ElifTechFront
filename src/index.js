@@ -10,7 +10,7 @@ import Loader from './components/Loader';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter basename='/ElifTechFront'>
+      <BrowserRouter>
         <Suspense fallback={<Loader/>}>
         <App />
         </Suspense>
