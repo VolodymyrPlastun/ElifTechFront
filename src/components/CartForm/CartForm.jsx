@@ -31,7 +31,7 @@ const CartForm = () => {
       address: formData.address,
     };
 
-    if(data.email === '' || data.phone === '380' || data.address === '' || data.name === '') {
+    if(data.email === '' || data.phone === '' || data.address === '' || data.name === '') {
       toast.error('Enter your data');
       return;
     }

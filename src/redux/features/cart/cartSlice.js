@@ -19,6 +19,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     makeOrder: (state, {payload}) => {
+      state.selectedItems = [];
       state.isActive = {
         isPizzaActive: false,
         isSushiActive: false
@@ -47,7 +48,9 @@ const cartSlice = createSlice({
       const productsItem = state.products.find(item => item._id === payload);
       itemInCart.amount++;
       productsItem.amount++;
+      console.log("🚀 ~ file: cartSlice.js:52 ~ productsItem.amount:", productsItem.amount)
     },
+     
     decrease: (state, { payload }) => {
       const itemInCart = state.selectedItems.find(item => item.id === payload);
       const productsItem = state.products.find(item => item._id === payload);
