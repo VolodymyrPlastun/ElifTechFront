@@ -48,7 +48,6 @@ const cartSlice = createSlice({
       const productsItem = state.products.find(item => item._id === payload);
       itemInCart.amount++;
       productsItem.amount++;
-      console.log("🚀 ~ file: cartSlice.js:52 ~ productsItem.amount:", productsItem.amount)
     },
      
     decrease: (state, { payload }) => {

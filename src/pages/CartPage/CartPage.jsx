@@ -58,7 +58,9 @@ const CartPage = () => {
           </Typography>
         </TextBox>
       )}
+      
     </Container>
+    
   );
 };
 
