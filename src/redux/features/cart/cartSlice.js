@@ -45,19 +45,19 @@ const cartSlice = createSlice({
     },
     increase: (state, { payload }) => {
       const itemInCart = state.selectedItems.find(item => item.id === payload);
-      const productsItem = state.products.find(item => item._id === payload);
+      // const productsItem = state.products.find(item => item._id === payload);
       itemInCart.amount++;
-      productsItem.amount++;
+      // productsItem.amount++;
     },
      
     decrease: (state, { payload }) => {
       const itemInCart = state.selectedItems.find(item => item.id === payload);
-      const productsItem = state.products.find(item => item._id === payload);
+      // const productsItem = state.products.find(item => item._id === payload);
       if(itemInCart.amount > 1) {
         itemInCart.amount--;
-        productsItem.amount--;
+        // productsItem.amount--;
       } else {
-        productsItem.amount = 0;
+        // productsItem.amount = 0;
         state.selectedItems = state.selectedItems.filter(item => item.id !== payload)
       }
       if(state.selectedItems.length === 0) {
@@ -70,7 +70,7 @@ const cartSlice = createSlice({
     },
     AddProduct: (state, {payload}) => {
       const itemInCart = state.selectedItems.find(item => item.id === payload.id);
-      const productsItem = state.products.find(item => item._id === payload.id);
+      // const productsItem = state.products.find(item => item._id === payload.id);
 
       if (itemInCart) {
         itemInCart.amount++;
@@ -78,7 +78,7 @@ const cartSlice = createSlice({
       } else {
         state.selectedItems.push({ ...payload, amount: 1 });
       }
-      productsItem.amount++;
+      // productsItem.amount++;
       if(state.selectedShop === 'pizza') {
         state.isActive = {
           isPizzaActive: false,

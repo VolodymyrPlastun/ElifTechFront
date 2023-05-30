@@ -18,11 +18,15 @@ import {
   Img,
   PizzaCard,
 } from './ProductsList.styled';
+import { Suspense } from 'react';
+import Loader from 'components/Loader/Loader';
 
 const ProductsList = () => {
   const dispatch = useDispatch();
 
-  const { products } = useSelector(state => state.cart);
+  const { products, selectedItems } = useSelector(state => state.cart);
+
+
 
   return (
     <Container>
@@ -32,6 +36,7 @@ const ProductsList = () => {
           <h2>Choose your shop</h2>
         </ChooseBox>
       ) : (
+        <Suspense fallback={<Loader/>}>
         <Grid container spacing={2}>
           {products.map(product => (
             <Grid item xs={12} sm={6} md={4} key={product._id}>
@@ -61,7 +66,7 @@ const ProductsList = () => {
                   </CardActionArea>
 
                   <CardActions sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    {product.amount < 1 ? (
+                    {!selectedItems.find(item => item.id === product._id)?.amount ? (
                       <>
                         <Button
                           onClick={() => {
@@ -88,7 +93,10 @@ const ProductsList = () => {
                         <Button onClick={() => dispatch(decrease(product._id))}>
                           <Remove />
                         </Button>
-                        <Amount>{product.amount}</Amount>
+                        <Amount>
+                          {selectedItems.find(item => item.id === product._id)?.amount ? selectedItems.find(item => item.id === product._id).amount : 0}
+                          {/* {product.amount} */}
+                          </Amount>
                         <Button
                           onClick={() => {
                             dispatch(increase(product._id));
@@ -104,6 +112,7 @@ const ProductsList = () => {
             </Grid>
           ))}
         </Grid>
+        </Suspense>
       )}
     </Container>
   );

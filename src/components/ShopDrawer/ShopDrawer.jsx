@@ -14,10 +14,11 @@ import CartForm from '../CartForm';
 import CartList from '../CartList';
 import ShopsList from '../ShopsList';
 import PropTypes from 'prop-types';
-import { lazy, useState } from 'react';
+import { lazy, useState, Suspense } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { PageLink } from './ShopDrawer.styled';
+import Loader from 'components/Loader';
 
 const ProductsList = lazy(() => import('../ProductsList'));
 
@@ -135,7 +136,7 @@ function ShopDrawer(props) {
         }}
       >
         <Toolbar />
-        {location.pathname === '/cart' ? <CartList /> : <ProductsList />}
+        {location.pathname === '/cart' ? <CartList /> : <Suspense fallback={<Loader/>}><ProductsList /></Suspense>}
       </Box>
     </Box>
   );
