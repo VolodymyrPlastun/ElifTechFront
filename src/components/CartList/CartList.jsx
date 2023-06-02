@@ -1,4 +1,4 @@
-import { Add, Remove } from '@mui/icons-material';
+import { Add, Remove } from "@mui/icons-material";
 import {
   Button,
   CardActionArea,
@@ -6,22 +6,27 @@ import {
   CardContent,
   Grid,
   Typography,
-} from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { AddProduct, decrease, increase } from 'redux/features/cart/cartSlice';
-import { Amount, Box, BtnBox, Img, PizzaCard } from './CartList.styled';
+} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { AddProduct, decrease, increase } from "redux/features/cart/cartSlice";
+import { Amount, Box, BtnBox, Img, PizzaCard } from "./CartList.styled";
 
 const CartList = () => {
   const dispatch = useDispatch();
 
-  const { selectedItems } = useSelector(state => state.cart);
+  const { selectedItems } = useSelector((state) => state.cart);
+
+  if (selectedItems && selectedItems.length !== 0) {
+    const selectedItemsString = JSON.stringify(selectedItems);
+    localStorage.setItem("selectedItems", selectedItemsString);
+  }
 
   return (
     <div>
       <Grid container spacing={2}>
-        {selectedItems?.map(product => (
+        {selectedItems?.map((product) => (
           <Grid item xs={12} sm={6} md={4} key={product.id}>
-            <PizzaCard style={{ height: '100%' }}>
+            <PizzaCard style={{ height: "100%" }}>
               <Box>
                 <CardActionArea>
                   <Img
@@ -46,7 +51,7 @@ const CartList = () => {
                   </CardContent>
                 </CardActionArea>
 
-                <CardActions sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <CardActions sx={{ display: "flex", alignItems: "flex-end" }}>
                   {product.amount < 1 ? (
                     <>
                       <Button
@@ -67,7 +72,7 @@ const CartList = () => {
                         color="primary"
                       >
                         Add to cart
-                      </Button>{' '}
+                      </Button>{" "}
                     </>
                   ) : (
                     <BtnBox>

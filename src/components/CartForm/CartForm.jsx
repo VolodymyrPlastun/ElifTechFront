@@ -1,28 +1,30 @@
-import { Button, TextField } from '@mui/material';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { saveFormData } from '../../redux/features/cart/cartSlice';
-import { Form, Label } from './CartForm.styled';
-import { toast } from 'react-hot-toast';
+import { Button, TextField } from "@mui/material";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { resetData, saveFormData } from "../../redux/features/cart/cartSlice";
+import { Form, Label } from "./CartForm.styled";
 
 const CartForm = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '380',
-    address: '',
+    name: "",
+    email: "",
+    phone: "380",
+    address: "",
   });
   const dispatch = useDispatch();
 
-  const handleChange = e => {
+  const userData = useSelector((state) => state.cart.formData);
+
+  const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
       [id]: value,
     }));
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
       name: formData.name,
@@ -31,22 +33,41 @@ const CartForm = () => {
       address: formData.address,
     };
 
-    if(data.email === '' || data.phone === '' || data.address === '' || data.name === '') {
-      toast.error('Enter your data');
+    if (
+      data.email === "" ||
+      data.phone === "" ||
+      data.address === "" ||
+      data.name === ""
+    ) {
+      toast.error("Enter your data");
       return;
     }
 
     dispatch(saveFormData(data));
     setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      address: '',
-    })
+      name: "",
+      email: "",
+      phone: "",
+      address: "",
+    });
+
+    const userDataString = JSON.stringify(data);
+    localStorage.setItem("userData", userDataString);
+  };
+
+  const handleReset = (e) => {
+    e.preventDefault();
+    if (Object.keys(userData).length === 0) {
+      toast.error("You need to save data first");
+      return;
+    }
+    dispatch(resetData());
+    localStorage.removeItem("userData");
+    toast.success("Your data has been reset");
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form>
       <Label htmlFor="name">Name</Label>
       <TextField
         type="text"
@@ -83,8 +104,21 @@ const CartForm = () => {
         value={formData.address}
         onChange={handleChange}
       ></TextField>
-      <Button sx={{ marginTop: '10px' }} variant="contained" type="submit">
+      <Button
+        onClick={handleSubmit}
+        sx={{ marginTop: "10px" }}
+        variant="contained"
+        type="submit"
+      >
         Save my data
+      </Button>
+      <Button
+        onClick={handleReset}
+        sx={{ marginTop: "10px" }}
+        variant="contained"
+        type="submit"
+      >
+        Reset data
       </Button>
     </Form>
   );

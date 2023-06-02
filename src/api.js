@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getProducts } from 'redux/features/cart/cartSlice';
+import { getProductsFromDB } from 'redux/features/cart/cartSlice';
 import { toast } from 'react-hot-toast';
 
 const baseUrl = 'https://eliftech-testtask.onrender.com/';
@@ -47,7 +47,7 @@ export const createOrder = async (userData, selectedProducts) => {
 export const getAllProducts = async (dispatch, fetchData) => {
   try {
     const products = await fetchData();
-    dispatch(getProducts(products));
+    dispatch(getProductsFromDB(products));
   } catch (error) {
 console.log(error.message);
   }

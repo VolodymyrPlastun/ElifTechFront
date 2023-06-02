@@ -30,6 +30,7 @@ const CartPage = () => {
       }
       createOrder(formData, selectedItems)
       dispatch(makeOrder());
+      localStorage.removeItem('selectedItems');
   }
   return (
     <Container>
@@ -51,13 +52,15 @@ const CartPage = () => {
             </Box>
           </TotalBox>
         </>
-      ) : (
+      ) 
+      : (
         <TextBox>
           <Typography style={{ fontSize: '30px' }}>
             Choose products <Link to="/">here</Link>
           </Typography>
         </TextBox>
-      )}
+      )
+      }
       
     </Container>
     
